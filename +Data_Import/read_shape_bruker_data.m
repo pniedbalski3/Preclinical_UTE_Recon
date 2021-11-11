@@ -3,15 +3,18 @@ function FID_mat = read_shape_bruker_data(path,Method_Params)
 %Read data and shape in order of 
 %[points x projections x Slices x echoes x bvalues x coils x repetitions]
 try
-    FIDs = Bruker_Load(fullfile(path,'rawdata.job0'));
+    FIDs = Data_Import.Bruker_Load(fullfile(path,'rawdata.job0'));
 catch
     try
-        FIDs = Bruker_Load(fullfile(path,'fid'));
+        FIDs = Data_Import.Bruker_Load(fullfile(path,'fid'));
     catch
-        FIDs = Bruker_Load(fullfile(path,'ser'));
+        FIDs = Data_Import.Bruker_Load(fullfile(path,'ser'));
     end
 end
 
+if ~isfield(Method_Params,'NPts')
+    Method_Params.NPts = Method_Params.MatrixSize(1)/2+Method_Params.ExtraPoints+Method_Params.AcqShift+Method_Params.RampPoints;
+end
 FID_mat = zeros(Method_Params.NPts,Method_Params.NPro,Method_Params.NSlices,Method_Params.NumTEs,Method_Params.Nbvalue,Method_Params.NCoil,Method_Params.Repetitions);
 
 %I think the best way to do this will be to use the number of points to
@@ -43,7 +46,7 @@ for i = 1:Method_Params.Repetitions
                         looping(1,count) = n;
                         looping(2,count) = m;
                         looping(3,count) = l;
-                        looping(4,count) = k;
+                        looping(4,count) = k; 
                         looping(5,count) = j;
                         looping(6,count) = i;
                         count = count+1;

@@ -23,8 +23,14 @@ if pts < size(rad,1)+1
     traj(:,(end-pts+1):end,:) = [];
 end
 
+if size(FID_mat,1) > size(traj,2)
+    FID_mat = FID_mat(1:size(traj,2),:,:,:,:,:,:);
+elseif size(FID_mat,1) < size(traj,2)
+    traj = traj(:,1:size(FID_mat,1),:);
+end
+
 traj_out = traj;
-FID_out = Fid_mat;
+FID_out = FID_mat;
     
 
 

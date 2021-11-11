@@ -741,6 +741,9 @@ elseif strcmp(Seq,'Spiral')
         Sz = [Sz Szval];
     end
     traj = zeros(3,NumPts,NPro);
+%     Sx = Sx*FOV(3)/FOV(1);
+%     Sy = Sy*FOV(3)/FOV(1);
+%     Sz = Sz*FOV(3)/FOV(1);
     for i = 1:length(Rx)
         traj(1,:,i) = Rx(i)*trajx + Ry(i)*trajy + Rz(i)*trajz; 
         traj(2,:,i) = Px(i)*trajx + Py(i)*trajy + Pz(i)*trajz; 
